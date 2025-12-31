@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\Admin\AgentCategoryController;
 use App\Http\Controllers\Api\Admin\TicketManagementController;
+use App\Http\Controllers\Api\GuestTicketController;
 
 Route::get('/health', function () {
     return response()->json([
@@ -19,7 +20,7 @@ Route::get('/health', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/tickets', [TicketController::class, 'store']);
+Route::post('/guest/tickets', [GuestTicketController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -28,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/tickets', [TicketController::class, 'index']);
+    Route::post('/tickets', [TicketController::class, 'store']);
     Route::post('/tickets/{ticket}/reply', [TicketController::class, 'reply']);
 
     Route::post('/tickets/{ticket}/rating', [RatingController::class, 'store'])

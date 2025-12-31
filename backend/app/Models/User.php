@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(AgentCategory::class, 'agent_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(TicketMessage::class, 'sender_id');
+    }
 }
