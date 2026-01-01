@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\Admin\AgentCategoryController;
 use App\Http\Controllers\Api\Admin\TicketManagementController;
+use App\Http\Controllers\Api\Admin\UserManagementController;
 use App\Http\Controllers\Api\GuestTicketController;
 
 Route::get('/health', function () {
@@ -24,9 +25,7 @@ Route::post('/guest/tickets', [GuestTicketController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/me', function (Request $request) {
-        return response()->json($request->user());
-    });
+    Route::get('/me', fn (Request $request) => $request->user());
 
     Route::get('/tickets', [TicketController::class, 'index']);
     Route::post('/tickets', [TicketController::class, 'store']);
@@ -36,6 +35,12 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('role:customer');
 
     Route::middleware('role:admin')->group(function () {
+
+        Route::post('/admin/users', [UserManagementController::class, 'store']);
+        Route::put(
+            '/admin/agents/{user}/categories',
+            [UserManagementController::class, 'updateAgentCategories']
+        );
 
         Route::post('/admin/agent-categories', [AgentCategoryController::class, 'store']);
         Route::delete('/admin/agent-categories/{agentCategory}', [AgentCategoryController::class, 'destroy']);
