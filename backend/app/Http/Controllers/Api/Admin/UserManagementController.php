@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class UserManagementController extends Controller
 {
+    public function index()
+    {
+        return response()->json(
+            User::select('id', 'name', 'email', 'role', 'created_at')
+                ->orderBy('id', 'asc')
+                ->get()
+        );
+    }
+    
     public function store(Request $request)
     {
         $validated = $request->validate([

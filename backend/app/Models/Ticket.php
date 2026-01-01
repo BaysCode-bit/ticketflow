@@ -42,4 +42,14 @@ class Ticket extends Model
     {
         return $this->hasOne(Rating::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function assignedAgent()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'assigned_agent_id');
+    }
 }

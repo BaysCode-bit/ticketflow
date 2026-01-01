@@ -37,6 +37,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:admin')->group(function () {
 
         Route::post('/admin/users', [UserManagementController::class, 'store']);
+
+        Route::get('/users', [UserManagementController::class, 'index']);
+
         Route::put(
             '/admin/agents/{user}/categories',
             [UserManagementController::class, 'updateAgentCategories']
@@ -47,5 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/admin/tickets/{ticket}/reassign', [TicketManagementController::class, 'reassign']);
         Route::post('/admin/tickets/{ticket}/close', [TicketManagementController::class, 'close']);
+
+        Route::get('/admin/tickets', [TicketManagementController::class, 'index']);
     });
 });

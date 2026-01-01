@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function agentCategories()
     {
-        return $this->hasMany(AgentCategory::class, 'agent_id');
+        return $this->belongsToMany(\App\Models\Category::class, 'agent_category');
     }
 
     public function messages()
